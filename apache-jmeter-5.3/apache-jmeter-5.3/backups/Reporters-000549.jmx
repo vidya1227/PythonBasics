@@ -1,0 +1,1967 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Reporters" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">true</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">true</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="OutputPassCSVFile" elementType="Argument">
+            <stringProp name="Argument.name">OutputPassCSVFile</stringProp>
+            <stringProp name="Argument.value">C:\Users\Dileep\Desktop\HTMLReports\outputPass.csv</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="OutputFailCSVFile" elementType="Argument">
+            <stringProp name="Argument.name">OutputFailCSVFile</stringProp>
+            <stringProp name="Argument.value">C:\Users\Dileep\Desktop\HTMLReports\outputFail.csv</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group_NetmedsDemo" enabled="false">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor1" enabled="false">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+import org.apache.commons.lang3.SystemUtils;
+
+println &apos;Pre---------Processor&apos;
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.html&apos;
+//String osv = SystemUtils.OS_VERSION
+def CurrentTime = new SimpleDateFormat(&quot;yyyy/MM/dd hh:mm:ss.SSS aaa&quot;).format(new Date())
+//println(TDNow)
+
+def os = SystemUtils.OS_NAME
+def UserName = SystemUtils.USER_NAME
+def ComputerName =SystemUtils.hostName
+def _threadGroupName = ctx.getThreadGroup().getName();
+//println(_threadGroupName)
+
+InetAddress myIP=InetAddress.getLocalHost();
+//println(&quot;My IP Address is:&quot;);
+//println(myIP.getHostAddress());
+def hostnameCanonical = myIP.getCanonicalHostName();
+//println(hostnameCanonical);
+
+
+File reportFile = new File(FilePathHTML)
+if(reportFile.exists()){
+	reportFile.delete()}
+if(!reportFile.exists()) {
+	reportFile.createNewFile()
+	reportFile &lt;&lt; &quot;&lt;html&gt;&lt;head&gt;&lt;style type=text/css&gt;&lt;/style&gt;&lt;/head&gt;&lt;table align=center border=0 cellpadding=4 cellspacing=0 style=border:0px solid width=100%&gt;&lt;tr&gt;&lt;td&gt;&lt;img src=C:\\Users\\Dileep\\Desktop\\HTMLReports\\Logo1PNG.png align=left style=width:90px;height:75px;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h1&gt;&lt;font color=darkgreen face=Verdana&gt;&lt;a&gt;Matryxsoft Test Reports&lt;/a&gt;&lt;/font&gt;&lt;/h1&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/html&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details name --&gt;&lt;table border=1 width=40% cellpadding=4 cellspacing=1&gt;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Thread Group Name&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$_threadGroupName&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Host ID&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$hostnameCanonical&lt;/td&gt;&lt;/tr&gt;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Compuer&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$ComputerName&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Windows&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$os&lt;/td&gt;&lt;/tr&gt;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Username&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$UserName&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Execution Started&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$CurrentTime&lt;/td&gt;&lt;/tr&gt;&quot;
+}
+
+</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler_Append1" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+
+String FilePathCSV= &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.csv&apos;
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.html&apos;
+
+def CurrentTime = new SimpleDateFormat(&quot;yyyy/MM/dd hh:mm:ss.SSS aaa&quot;).format(new Date())
+
+// read all the content of the file into a single string
+//File fh1 = new File(FilePathCSV)
+//text = fh1.getText(&apos;UTF-8&apos;)
+//println(text)
+
+File reportFile = new File(FilePathHTML)
+reportFile &lt;&lt; &quot;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Execution Finished&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$CurrentTime&lt;/td&gt;&lt;/tr&gt;&quot;
+
+File fh3 = new File(FilePathCSV)
+def rows = fh3.readLines()
+for (int i=0;i&lt;=rows.size();i++) {
+	//println i
+	if(i==rows.size()-1){
+		//println(lines[i])
+		if (rows[i].contains(&quot;TRUE&quot;)){
+			println &apos;PASS&apos;
+			reportFile &lt;&lt; &quot;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Status&lt;/td&gt;&lt;td style=color:green; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;PASS&lt;/td&gt;&lt;!--td style=color:red; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;FAIL&lt;/td&gt;&lt;td style=color:orange; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;Not Executed&lt;/td--&gt;&lt;/tr&gt;&quot;
+		}
+		else if (rows[i].contains(&quot;FALSE&quot;)){
+			//println &apos;FAILED&apos;
+			reportFile &lt;&lt; &quot;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Status&lt;/td&gt;&lt;td style=color:red; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;FAIL&lt;/td&gt;&lt;/tr&gt;&quot;
+		}
+		else{
+			//println &apos;Not Executed&apos;
+			reportFile &lt;&lt; &quot;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Status&lt;/td&gt;&lt;td style=color:orange; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;Not Executed&lt;/td&gt;&lt;/tr&gt;&quot;
+			
+		}
+		}}
+
+reportFile &lt;&lt; &quot;&lt;/table&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details --&gt;&lt;table border=1px solid black border=0 width=100% cellpadding=4 cellspacing=1 style=border:1px solid;&gt;&lt;tr bgcolor=darkgreen&gt;&lt;th style=color:white&gt;Time Stamp&lt;/th&gt;&lt;th style=color:white&gt;Elapsed&lt;/th&gt;&lt;th style=color:white&gt;Sampler Name&lt;/th&gt;&lt;th style=color:white&gt;Response Code&lt;/th&gt;&lt;th style=color:white&gt;Response Message&lt;/th&gt;&lt;th style=color:white&gt;Thread Name&lt;/th&gt;&lt;th style=color:white&gt;Data Type&lt;/th&gt;&lt;th style=color:white&gt;Success&lt;/th&gt;&lt;th style=color:white&gt;Failure Message&lt;/th&gt;&lt;th style=color:white&gt;Bytes&lt;/th&gt;&lt;th style=color:white&gt;Sent Bytes&lt;/th&gt;&lt;th style=color:white&gt;grp Threads&lt;/th&gt;&lt;th style=color:white&gt;All Threads&lt;/th&gt;&lt;th style=color:white&gt;URL&lt;/th&gt;&lt;th style=color:white&gt;Latency&lt;/th&gt;&lt;th style=color:white&gt;Idle Time&lt;/th&gt;&lt;th style=color:white&gt;Connect&lt;/th&gt;&lt;/tr&gt;&quot;
+ 
+// read all the lines into a list, each line is an element in the list
+File fh2 = new File(FilePathCSV)
+def lines = fh2.readLines()
+//println(lines)
+for (int i=0;i&lt;=lines.size();i++) {
+	if((i&gt;0) &amp;&amp; (i&lt;lines.size()-1)){
+		//println(lines[i])
+		//log.info(lines[i])
+		String[] Lists;
+		Lists= lines[i].split(&apos;,&apos;)
+		//println(Lists)
+		//log.info(Lists)
+		for(int j=0;j&lt;=Lists.size();j++){
+			//println(Lists[j])
+			
+			reportFile &lt;&lt; &quot;&lt;tr&gt;&lt;td&gt;&quot;+Lists[0]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[1]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[2]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[3]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[4]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[5]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[6]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[7]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[8]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[9]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[10]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[11]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[12]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[13]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[14]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[15]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[16]+ &quot;&lt;/td&gt;&lt;/tr&gt;&quot;
+			break
+			//println(&apos;hi&apos;)
+			//log.info(Lists[j])
+		}		
+	}		
+    // ...
+}
+
+reportFile &lt;&lt; &quot;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;&quot;
+
+
+
+
+ </stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree1" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor1" enabled="false">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+
+println &apos;Post processor &apos;
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.html&apos;
+
+File reportFile = new File(FilePathHTML)
+reportFile &lt;&lt; &quot;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;&quot;
+</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223PostProcessor>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 SamplerRename" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+
+String TDNow = new SimpleDateFormat(&quot;yyyy/MM/dd hh:mm:ss aaa&quot;).format(new Date())
+println(TDNow)
+
+//
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.html&apos;
+//
+File reportFile = new File(FilePathHTML)
+if(reportFile.exists()) {
+	println(&apos;go&apos;)
+	reportFile.renameTo(new File((&apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output9999999.html&apos;))
+	println(&apos;bye&apos;)
+	
+}
+
+
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler_Rename2" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+
+String TDNow = new SimpleDateFormat(&quot;yyyy/MM/dd hh:mm:ss aaa&quot;).format(new Date())
+println(TDNow)
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.html&apos;
+
+try {
+
+String oldfile = &quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.html&quot;;
+File file = new File(oldfile);
+File newfile = new File(&quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output$TDNow.html&quot;);
+
+boolean success = file.renameTo(newfile);
+if (success)
+log.info(&quot;file renamed successfully&quot;);             
+}
+
+catch (Throwable e) {
+    log.error(&quot;Error in Beanshell&quot;,e);
+}</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler_Append2" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+
+//String FilePathCSV= &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.csv&apos;
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.html&apos;
+
+File reportFile = new File(FilePathHTML)
+reportFile &lt;&lt; &quot;&lt;/table&gt;&lt;!-- Display test case details --&gt;&lt;table border=1px solid black border=0 width=100% cellpadding=4 cellspacing=1 style=border:1px solid;&gt;&lt;tr bgcolor=darkgreen&gt;&lt;th style=color:white&gt;Time Stamp&lt;/th&gt;&lt;th style=color:white&gt;Elapsed&lt;/th&gt;&lt;th style=color:white&gt;Sampler Name&lt;/th&gt;&lt;th style=color:white&gt;Response Code&lt;/th&gt;&lt;th style=color:white&gt;Response Message&lt;/th&gt;&lt;th style=color:white&gt;Thread Name&lt;/th&gt;&lt;th style=color:white&gt;Data Type&lt;/th&gt;&lt;th style=color:white&gt;Success&lt;/th&gt;&lt;th style=color:white&gt;Failure Message&lt;/th&gt;&lt;th style=color:white&gt;Bytes&lt;/th&gt;&lt;th style=color:white&gt;Sent Bytes&lt;/th&gt;&lt;th style=color:white&gt;grp Threads&lt;/th&gt;&lt;th style=color:white&gt;All Threads&lt;/th&gt;&lt;th style=color:white&gt;URL&lt;/th&gt;&lt;th style=color:white&gt;Latency&lt;/th&gt;&lt;th style=color:white&gt;Idle Time&lt;/th&gt;&lt;th style=color:white&gt;Connect&lt;/th&gt;&lt;/tr&gt;&quot;
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+
+println &apos;Hi&apos;
+
+String FilePathCSV= &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.csv&apos;
+
+File fh2 = new File(FilePathCSV)
+def lines = fh2.readLines()
+//println(lines)
+int totalRows = lines.size()
+//println(totalRows)
+for (int i=0;i&lt;=lines.size();i++) {
+	//println i
+	if(i==totalRows-1){
+		//println(lines[i])
+		if (lines[i].contains(&quot;TRUE&quot;)){
+			println &apos;PASS&apos;
+		}
+		else{
+			println &apos;FAILED&apos;
+		}}}</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor_FirstAppend2" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+import org.apache.commons.lang3.SystemUtils;
+
+println &apos;1&apos;
+//println &apos;Pre---------Processor&apos;
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.html&apos;
+//String osv = SystemUtils.OS_VERSION
+def CurrentTime = new SimpleDateFormat(&quot;yyyy/MM/dd hh:mm:ss aaa&quot;).format(new Date())
+//println(TDNow)
+
+def os = SystemUtils.OS_NAME
+def UserName = SystemUtils.USER_NAME
+def ComputerName =SystemUtils.hostName
+def _threadGroupName = ctx.getThreadGroup().getName();
+//println(_threadGroupName)
+
+InetAddress myIP=InetAddress.getLocalHost();
+//println(&quot;My IP Address is:&quot;);
+//println(myIP.getHostAddress());
+def hostnameCanonical = myIP.getCanonicalHostName();
+//println(hostnameCanonical);
+
+
+File reportFile = new File(FilePathHTML)
+if(reportFile.exists()){
+	reportFile.delete()}
+if(!reportFile.exists()) {
+	reportFile.createNewFile()
+	reportFile &lt;&lt; &quot;&lt;html&gt;&lt;head&gt;&lt;style type=text/css&gt;&lt;/style&gt;&lt;/head&gt;&lt;table align=center border=0 cellpadding=4 cellspacing=0 style=border:0px solid width=100%&gt;&lt;tr&gt;&lt;td&gt;&lt;img src=C:\\Users\\Dileep\\Desktop\\HTMLReports\\Logo1PNG.png align=left style=width:90px;height:75px;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h1&gt;&lt;font color=darkgreen face=Verdana&gt;&lt;a&gt;Matryxsoft Test Reports&lt;/a&gt;&lt;/font&gt;&lt;/h1&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/html&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details name --&gt;&lt;table border=1 width=40% cellpadding=4 cellspacing=1&gt;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Thread Group Name&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$_threadGroupName&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Status&lt;/td&gt;&lt;td style=color:green; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;PASS&lt;/td&gt;&lt;!--td style=color:red; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;FAIL&lt;/td&gt;&lt;td style=color:orange; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;Not Executed&lt;/td--&gt;&lt;/tr&gt;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Host ID&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$hostnameCanonical&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Compuer&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$ComputerName&lt;/td&gt;&lt;/tr&gt;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Windows&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$os&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Username&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$UserName&lt;/td&gt;&lt;/tr&gt;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Execution started&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$CurrentTime&lt;/td&gt;&lt;/tr&gt;&quot;
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler_try" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+
+String FilePathCSV= &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.csv&apos;
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.html&apos;
+
+def CurrentTime = new SimpleDateFormat(&quot;yyyy/MM/dd hh:mm:ss.SSS aaa&quot;).format(new Date())
+
+// read all the content of the file into a single string
+//File fh1 = new File(FilePathCSV)
+//text = fh1.getText(&apos;UTF-8&apos;)
+//println(text)
+
+File reportFile = new File(FilePathHTML)
+reportFile &lt;&lt; &quot;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Execution Finished&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$CurrentTime&lt;/td&gt;&lt;/tr&gt;&quot;
+
+File fh3 = new File(FilePathCSV)
+def rows = fh3.readLines()
+for (int i=0;i&lt;=rows.size();i++) {
+	//println i
+	if(i==rows.size()-1){
+		//println(lines[i])
+		if (rows[i].contains(&quot;TRUE&quot;)){
+			//println &apos;PASS&apos;
+			reportFile &lt;&lt; &quot;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Status&lt;/td&gt;&lt;td style=color:green; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;PASS&lt;/td&gt;&lt;!--td style=color:red; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;FAIL&lt;/td&gt;&lt;td style=color:orange; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;Not Executed&lt;/td--&gt;&lt;/tr&gt;&quot;
+		}
+		else if (rows[i].contains(&quot;FALSE&quot;)){
+			//println &apos;FAILED&apos;
+			reportFile &lt;&lt; &quot;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Status&lt;/td&gt;&lt;td style=color:red; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;FAIL&lt;/td&gt;&lt;/tr&gt;&quot;
+		}
+		else{
+			//println &apos;Not Executed&apos;
+			reportFile &lt;&lt; &quot;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Status&lt;/td&gt;&lt;td style=color:orange; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;Not Executed&lt;/td&gt;&lt;/tr&gt;&quot;
+			
+		}
+		}}
+
+reportFile &lt;&lt; &quot;&lt;/table&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details --&gt;&lt;table border=1px solid black border=0 width=100% cellpadding=4 cellspacing=1 style=border:1px solid;&gt;&lt;tr bgcolor=darkgreen&gt;&lt;th style=color:white&gt;Time Stamp&lt;/th&gt;&lt;th style=color:white&gt;Time Elapsed(miliSeconds)&lt;/th&gt;&lt;th style=color:white&gt;Sampler Name&lt;/th&gt;&lt;th style=color:white&gt;Response Code&lt;/th&gt;&lt;th style=color:white&gt;Response Message&lt;/th&gt;&lt;th style=color:white&gt;Success&lt;/th&gt;&lt;th style=color:white&gt;Failure Message&lt;/th&gt;&lt;th style=color:white&gt;URL&lt;/th&gt;&lt;/tr&gt;&quot;
+ 
+// read all the lines into a list, each line is an element in the list
+File fh2 = new File(FilePathCSV)
+def lines = fh2.readLines()
+//println(lines)
+for (int i=0;i&lt;=lines.size();i++) {
+	if((i&gt;0) &amp;&amp; (i&lt;lines.size()-1)){
+		//println(lines[i])
+		//log.info(lines[i])
+		String[] Lists;
+		Lists= lines[i].split(&apos;,&apos;)
+		//println(Lists)
+		//log.info(Lists)
+		for(int j=0;j&lt;=Lists.size();j++){
+			//println(Lists[j])
+			
+			reportFile &lt;&lt; &quot;&lt;tr&gt;&lt;td&gt;&quot;+Lists[0]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[1]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[2]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[3]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[4]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[7]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[8]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[13]+ &quot;&lt;/td&gt;&lt;/tr&gt;&quot;
+			break
+			//println(&apos;hi&apos;)
+			//log.info(Lists[j])
+		}		
+	}		
+    // ...
+}
+reportFile &lt;&lt; &quot;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;&quot;
+
+
+//Summary block
+
+reportFile &lt;&lt; &quot;&lt;h1&gt;&lt;/h1&gt;&lt;h2&gt;Summary of Report&lt;/h2&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details --&gt;&lt;table border=1px solid black border=0 width=100% cellpadding=4 cellspacing=1 style=border:1px solid;&gt;&lt;tr bgcolor=darkgreen&gt;&lt;th style=color:white&gt;Time Stamp&lt;/th&gt;&lt;th style=color:white&gt;Time Elapsed(miliSeconds)&lt;/th&gt;&lt;th style=color:white&gt;Sampler Name&lt;/th&gt;&lt;th style=color:white&gt;Response Code&lt;/th&gt;&lt;th style=color:white&gt;Response Message&lt;/th&gt;&lt;th style=color:white&gt;Success&lt;/th&gt;&lt;th style=color:white&gt;Failure Message&lt;/th&gt;&lt;th style=color:white&gt;URL&lt;/th&gt;&lt;/tr&gt;&quot;
+
+// read all the lines into a list, each line is an element in the list
+File fh23 = new File(FilePathCSV)
+def lines1 = fh23.readLines()
+//println(lines)
+for (int i=0;i&lt;=lines1.size();i++) {
+	if(i==lines1.size()-1){
+		//println(lines[i])
+		//log.info(lines[i])
+		String[] Lists;
+		Lists= lines1[i].split(&apos;,&apos;)
+		//println(Lists)
+		//log.info(Lists)
+		for(int j=0;j&lt;=Lists.size();j++){
+			//println(Lists[j])
+			
+			reportFile &lt;&lt; &quot;&lt;tr&gt;&lt;td&gt;&quot;+Lists[0]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[1]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[2]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[3]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[4]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[7]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[8]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[13]+ &quot;&lt;/td&gt;&lt;/tr&gt;&quot;
+			break
+			//println(&apos;hi&apos;)
+			//log.info(Lists[j])
+		}		
+	}		
+    // ...
+}
+reportFile &lt;&lt; &quot;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;&quot;
+
+
+
+
+ </stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler_try&amp;Error" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.*
+import org.apache.poi.*
+import jxl.*
+
+String filepath= &quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\XLSFiles\\outputException.xls&quot;;
+Workbook workbook = Workbook.getWorkbook(new File(filepath))
+Sheet sheet = workbook.getSheet(0)
+
+//get row count
+int totalRows = sheet.getRows()
+//println totalRows
+def lastRow=totalRows-1
+
+//get column count
+int totalColumn = sheet.getColumns()
+//println totalColumn
+
+def lsRowData
+for(int r = 0;r&lt;totalRows;r++){
+	lsRowData=[]
+	if(r==lastRow){
+		for(int c = 0;c&lt;totalColumn;c++){
+			cValue = sheet.getCell(c,r).getContents()
+			lsRowData.add(cValue)
+			if(lsRowData.size()==totalColumn){
+				//println lsRowData
+				for (int i=0;i&lt;=lsRowData.size();i++) {
+					//println i
+					if(i==lsRowData.size()-1){
+						//println(lines[i])
+						if (lsRowData[i].contains(&quot;TRUE&quot;)){
+							//println &apos;PASS&apos;
+							reportFile &lt;&lt;&quot;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Status&lt;/td&gt;&lt;td style=color:green; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;PASS&lt;/td&gt;&lt;!--td style=color:red; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;FAIL&lt;/td&gt;&lt;td style=color:orange; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;Not Executed&lt;/td--&gt;&lt;/tr&gt;&quot;
+							}
+							else if (lsRowData[i].contains(&quot;FALSE&quot;)){
+								//println &apos;FAILED&apos;
+								reportFile &lt;&lt;&quot;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Status&lt;/td&gt;&lt;td style=color:red; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;FAIL&lt;/td&gt;&lt;/tr&gt;&quot;
+								}
+								else{
+									//println &apos;Not Executed&apos;
+									reportFile &lt;&lt; &quot;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Status&lt;/td&gt;&lt;td style=color:orange; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;Not Executed&lt;/td&gt;&lt;/tr&gt;&quot;
+									}
+									}}
+				
+			}
+		}
+	}
+}
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+      </hashTree>
+      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="setUp Thread Group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </SetupThreadGroup>
+      <hashTree>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+
+println &apos;Pre---------Processor&apos;
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor_FirstAppend2" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+import org.apache.commons.lang3.SystemUtils;
+
+println &apos;1&apos;
+//println &apos;Pre---------Processor&apos;
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.html&apos;
+//String osv = SystemUtils.OS_VERSION
+def CurrentTime = new SimpleDateFormat(&quot;yyyy/MM/dd hh:mm:ss aaa&quot;).format(new Date())
+//println(TDNow)
+
+def os = SystemUtils.OS_NAME
+def UserName = SystemUtils.USER_NAME
+def ComputerName =SystemUtils.hostName
+def _threadGroupName = ctx.getThreadGroup().getName();
+//println(_threadGroupName)
+
+InetAddress myIP=InetAddress.getLocalHost();
+//println(&quot;My IP Address is:&quot;);
+//println(myIP.getHostAddress());
+def hostnameCanonical = myIP.getCanonicalHostName();
+//println(hostnameCanonical);
+
+
+File reportFile = new File(FilePathHTML)
+if(reportFile.exists()){
+	reportFile.delete()}
+if(!reportFile.exists()) {
+	reportFile.createNewFile()
+	reportFile &lt;&lt; &quot;&lt;html&gt;&lt;head&gt;&lt;style type=text/css&gt;&lt;/style&gt;&lt;/head&gt;&lt;table align=center border=0 cellpadding=4 cellspacing=0 style=border:0px solid width=100%&gt;&lt;tr&gt;&lt;td&gt;&lt;img src=C:\\Users\\Dileep\\Desktop\\HTMLReports\\Logo1PNG.png align=left style=width:90px;height:75px;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h1&gt;&lt;font color=darkgreen face=Verdana&gt;&lt;a&gt;Matryxsoft Test Reports&lt;/a&gt;&lt;/font&gt;&lt;/h1&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/html&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details name --&gt;&lt;table border=1 width=40% cellpadding=4 cellspacing=1&gt;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Thread Group Name&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$_threadGroupName&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Status&lt;/td&gt;&lt;td style=color:green; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;PASS&lt;/td&gt;&lt;!--td style=color:red; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;FAIL&lt;/td&gt;&lt;td style=color:orange; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;Not Executed&lt;/td--&gt;&lt;/tr&gt;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Host ID&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$hostnameCanonical&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Compuer&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$ComputerName&lt;/td&gt;&lt;/tr&gt;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Windows&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$os&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Username&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$UserName&lt;/td&gt;&lt;/tr&gt;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Execution started&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$CurrentTime&lt;/td&gt;&lt;/tr&gt;&quot;
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+      </hashTree>
+      <PostThreadGroup guiclass="PostThreadGroupGui" testclass="PostThreadGroup" testname="tearDown Thread Group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </PostThreadGroup>
+      <hashTree>
+        <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor_LastAppend2" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+
+println &apos;4&apos;
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.html&apos;
+
+File reportFile = new File(FilePathHTML)
+reportFile &lt;&lt; &quot;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;&quot;</stringProp>
+        </JSR223PostProcessor>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler2_Ap2" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+
+println &apos;3&apos;
+String FilePathCSV= &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.csv&apos;
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.html&apos;
+
+// read all the content of the file into a single string
+//File fh1 = new File(FilePathCSV)
+//text = fh1.getText(&apos;UTF-8&apos;)
+//println(text)
+ 
+// read all the lines into a list, each line is an element in the list
+File fh2 = new File(FilePathCSV)
+def lines = fh2.readLines()
+//println(lines)
+for (int i=0;i&lt;=lines.size();i++) {
+	if(i&gt;0){
+		//println(lines[i])
+		//log.info(lines[i])
+		String[] Lists;
+		Lists= lines[i].split(&apos;,&apos;)
+		//println(Lists)
+		//log.info(Lists)
+		for(int j=0;j&lt;=Lists.size();j++){
+			//println(Lists[j])
+			File reportFile = new File(FilePathHTML)
+			reportFile &lt;&lt; &quot;&lt;tr&gt;&lt;td&gt;&quot;+Lists[0]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[1]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[2]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[3]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[4]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[5]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[6]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[7]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[8]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[9]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[10]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[11]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[12]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[13]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[14]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[15]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[16]+ &quot;&lt;/td&gt;&lt;/tr&gt;&quot;
+			break
+			//println(&apos;hi&apos;)
+			//log.info(Lists[j])
+		}
+		
+		
+	}		
+    // ...
+}
+
+
+ </stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor_Ap2" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+
+println(&apos;2&apos;)
+
+def CurrentTime = new SimpleDateFormat(&quot;yyyy/MM/dd hh:mm:ss aaa&quot;).format(new Date())
+//println(TDNow)
+//println &apos;Post processor &apos;
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.html&apos;
+
+File reportFile = new File(FilePathHTML)
+reportFile &lt;&lt; &quot;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Execution Finished&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$CurrentTime&lt;/td&gt;&lt;/tr&lt;/table&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details --&gt;&lt;table border=1px solid black border=0 width=100% cellpadding=4 cellspacing=1 style=border:1px solid;&gt;&lt;tr bgcolor=darkgreen&gt;&lt;th style=color:white&gt;Time Stamp&lt;/th&gt;&lt;th style=color:white&gt;Elapsed&lt;/th&gt;&lt;th style=color:white&gt;Sampler Name&lt;/th&gt;&lt;th style=color:white&gt;Response Code&lt;/th&gt;&lt;th style=color:white&gt;Response Message&lt;/th&gt;&lt;th style=color:white&gt;Thread Name&lt;/th&gt;&lt;th style=color:white&gt;Data Type&lt;/th&gt;&lt;th style=color:white&gt;Success&lt;/th&gt;&lt;th style=color:white&gt;Failure Message&lt;/th&gt;&lt;th style=color:white&gt;Bytes&lt;/th&gt;&lt;th style=color:white&gt;Sent Bytes&lt;/th&gt;&lt;th style=color:white&gt;grp Threads&lt;/th&gt;&lt;th style=color:white&gt;All Threads&lt;/th&gt;&lt;th style=color:white&gt;URL&lt;/th&gt;&lt;th style=color:white&gt;Latency&lt;/th&gt;&lt;th style=color:white&gt;Idle Time&lt;/th&gt;&lt;th style=color:white&gt;Connect&lt;/th&gt;&lt;/tr&gt;&quot;
+
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+      </hashTree>
+      <JSR223Listener guiclass="TestBeanGUI" testclass="JSR223Listener" testname="JSR223 Listener" enabled="false">
+        <stringProp name="cacheKey">true</stringProp>
+        <stringProp name="filename"></stringProp>
+        <stringProp name="parameters"></stringProp>
+        <stringProp name="script">println &apos;Main and Last listener&apos;
+
+</stringProp>
+        <stringProp name="scriptLanguage">groovy</stringProp>
+      </JSR223Listener>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="try" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SysInfo" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import org.apache.commons.lang3.SystemUtils;
+
+
+String os = SystemUtils.OS_NAME
+String UserName = SystemUtils.USER_NAME
+String osv = SystemUtils.OS_VERSION
+String n = SystemUtils.hostName
+println n
+println os
+println UserName
+println osv
+
+InetAddress myIP=InetAddress.getLocalHost();
+println(&quot;My IP Address is:&quot;);
+println(myIP.getHostAddress());
+String hostnameCanonical = myIP.getCanonicalHostName();
+println(hostnameCanonical);
+</stringProp>
+        </JSR223Sampler>
+        <hashTree>
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+        </hashTree>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler_CSVtoEXCEL" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.*;
+
+String csvFile=&quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\outputException.csv&quot;
+
+BufferedReader br = new BufferedReader(new FileReader(csvFile));
+while ((line = br.readLine()) != null) {
+    // use comma as separator
+    String[] cols = line.split(&quot;|&quot;);
+    println(&quot;Coulmn 4= &quot; + cols[4] + &quot; , Column 5=&quot; + cols[5]);
+    log.info(&quot;Coulmn 4= &quot; + cols[4] + &quot; , Column 5=&quot; + cols[5]);
+}</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler_ExcelReader" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import org.apache.poi.ss.usermodel.*
+import org.apache.poi.hssf.usermodel.*
+import org.apache.poi.xssf.usermodel.*
+import org.apache.poi.ss.util.*
+//import org.codehaus.groovy.scriptom.ActiveXObject
+import java.io.*;
+import jxl.*
+import jxl.write.*
+
+//Excel Path
+def fs = new File(&quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\XLSFiles\\outputException.xls&quot;)
+
+Workbook wb = WorkbookFactory.create(fs);
+def ws = wb.getSheet(&quot;outputException&quot;) 	
+def rowCount = ws.getPhysicalNumberOfRows()
+
+//To Get Number of Rows in The given excel sheet 
+println(&quot;Number of Rows in a sheet: &quot; +rowCount)
+
+
+//To Fetch the Row
+Sheet sheet = wb.getSheetAt(0);
+   Row row1 = sheet.getRow(1);
+   def colcount = row1.getLastCellNum();
+   println(&quot;total column count in a sheet :  &quot; +colcount)
+
+   //get cell values
+for(int r = 1;r&lt;rowCount;r++){
+	for(int c= 1;c&lt;colcount;c++){
+	Row row = sheet.getRow(r);
+	Cell UserNameCell = row.getCell(c);
+    String sUserName=UserNameCell
+    println(sUserName)
+	}
+	
+	
+}
+
+//
+//def columnsCount = ws.getFirstRowNum()
+//println(&quot;total columns c :  &quot; +columnsCount)
+//
+//def lastrow = ws.getLastRowNum()
+//println(&quot;Last row number:  &quot;+ lastrow)
+//
+//def header = ws.getHeader()
+//println(&quot;Last header:  &quot;+ header)
+//
+//
+//////To Get Number of Sheets in the given Excel
+//// int sheetNum = wb.getNumberOfSheets();
+//// println(&quot;Number of Sheets: &quot; +sheetNum)
+////
+////To Fetch the Row
+//Sheet sheet = wb.getSheetAt(0);
+//   Row row = sheet.getRow(2);
+//   def colcount = row.getLastCellNum();
+//   println(&quot;total columns b :  &quot; +colcount)
+//   
+//
+////Fetching Usanme
+//   Cell UserNameCell = row.getCell(0);
+//   String sUserName=UserNameCell
+//   println(sUserName)
+//   
+////Fetching Password
+//   Cell PasswordCell = row.getCell(1);
+//   String sPassowrd=PasswordCell
+//   println(sPassowrd)
+//
+//
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler_ExcelData" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException; 
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+
+String filepath= &quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\XLSFiles\\outputException.xls&quot;;
+Workbook wb= new WorkbookFactory().create(new FileInputStream(new File(filepath)));
+
+//get the sheet which needs read operation
+Sheet sh = wb.getSheet(&quot;outputException&quot;);
+//get the total row count in the excel sheet
+int rowcount = sh.getLastRowNum();
+println rowcount
+// get the total cell count in the excel sheet
+int cellcount = sh.getRow(0).getLastCellNum();
+println (cellcount)
+for (int i = 0; i &lt;= rowcount; i++){
+	for (int j = 0; j &lt; cellcount; j++){
+		//get cell value at the given position [i][j]
+		String value = sh.getRow(i).getCell(j).getStringCellValue();
+		//String[] lists = 
+		//print the cell value
+		println(value);
+		log.info(value)
+		}
+	}
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>false</latency>
+              <timestamp>true</timestamp>
+              <success>false</success>
+              <label>true</label>
+              <code>false</code>
+              <message>false</message>
+              <threadName>false</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>false</assertions>
+              <subresults>false</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>true</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>true</responseHeaders>
+              <requestHeaders>true</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler_get" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException; 
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\testXLS1.html&apos;
+
+File reportFile = new File(FilePathHTML)
+if(reportFile.exists()){
+	reportFile.delete()}
+if(!reportFile.exists()) {
+	reportFile.createNewFile()
+	reportFile &lt;&lt; &quot;&lt;html&gt;&lt;head&gt;&lt;style type=text/css&gt;&lt;/style&gt;&lt;/head&gt;&lt;table align=center border=0 cellpadding=4 cellspacing=0 style=border:0px solid width=100%&gt;&lt;tr&gt;&lt;td&gt;&lt;img src=C:\\Users\\Dileep\\Desktop\\HTMLReports\\Logo1PNG.png align=left style=width:90px;height:75px;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h1&gt;&lt;font color=darkgreen face=Verdana&gt;&lt;a&gt;Matryxsoft Test Reports&lt;/a&gt;&lt;/font&gt;&lt;/h1&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/html&gt;&lt;h1&gt;&lt;/h1&gt;&lt;/table&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details --&gt;&lt;table border=1px solid black border=0 width=100% cellpadding=4 cellspacing=1 style=border:1px solid;&gt;&lt;tr bgcolor=darkgreen&gt;&lt;th style=color:white&gt;Time Stamp&lt;/th&gt;&lt;th style=color:white&gt;Time Elapsed(miliSeconds)&lt;/th&gt;&lt;th style=color:white&gt;Sampler Name&lt;/th&gt;&lt;th style=color:white&gt;Response Code&lt;/th&gt;&lt;th style=color:white&gt;Response Message&lt;/th&gt;&lt;th style=color:white&gt;Success&lt;/th&gt;&lt;th style=color:white&gt;Failure Message&lt;/th&gt;&lt;th style=color:white&gt;URL&lt;/th&gt;&lt;/tr&gt;&quot;
+}
+
+//if(!reportFile.exists()) {
+//	reportFile.createNewFile()
+//	reportFile &lt;&lt; &quot;&lt;html&gt;&lt;head&gt;&lt;style type=text/css&gt;&lt;/style&gt;&lt;/head&gt;&lt;table align=center border=0 cellpadding=4 cellspacing=0 style=border:0px solid width=100%&gt;&lt;tr&gt;&lt;td&gt;&lt;img src=C:\\Users\\Dileep\\Desktop\\HTMLReports\\Logo1PNG.png align=left style=width:90px;height:75px;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h1&gt;&lt;font color=darkgreen face=Verdana&gt;&lt;a&gt;Matryxsoft Test Reports&lt;/a&gt;&lt;/font&gt;&lt;/h1&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/html&gt;&lt;h1&gt;&lt;/h1&gt;&lt;/table&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details --&gt;&lt;table border=1px solid black border=0 width=100% cellpadding=4 cellspacing=1 style=border:1px solid;&gt;&lt;tr bgcolor=darkgreen&gt;&lt;th style=color:white&gt;Time Stamp&lt;/th&gt;&lt;th style=color:white&gt;Time Elapsed(miliSeconds)&lt;/th&gt;&lt;th style=color:white&gt;Sampler Name&lt;/th&gt;&lt;th style=color:white&gt;Response Code&lt;/th&gt;&lt;th style=color:white&gt;Response Message&lt;/th&gt;&lt;th style=color:white&gt;Success&lt;/th&gt;&lt;th style=color:white&gt;Failure Message&lt;/th&gt;&lt;th style=color:white&gt;URL&lt;/th&gt;&lt;/tr&gt;&quot;
+//}
+
+String filepath= &quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\XLSFiles\\outputException.xls&quot;;
+Workbook wb= new WorkbookFactory().create(new FileInputStream(new File(filepath)));
+
+//get the sheet which needs read operation
+Sheet sh = wb.getSheet(&quot;outputException&quot;);
+//get the total row count in the excel sheet
+int rowcount = sh.getLastRowNum();
+println rowcount
+// get the total cell count in the excel sheet
+int cellcount = sh.getRow(0).getLastCellNum();
+println (cellcount)
+for (int i = 0; i &lt;= rowcount; i++){
+	if (i&gt;1){
+		for (int j = 0; j &lt; cellcount; j++){
+		//get cell value at the given position [i][j]
+		String value = sh.getRow(i).getCell(j).getStringCellValue();
+		reportFile &lt;&lt; &quot;&lt;tr&gt;&lt;td&gt;&quot;+sh.getRow(i).getCell(j).getStringCellValue()+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+sh.getRow(i).getCell(j).getStringCellValue()+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+sh.getRow(i).getCell(j).getStringCellValue()+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+sh.getRow(i).getCell(j).getStringCellValue()+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+sh.getRow(i).getCell(j).getStringCellValue()+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+sh.getRow(i).getCell(j).getStringCellValue()+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+sh.getRow(i).getCell(j).getStringCellValue()+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+sh.getRow(i).getCell(j).getStringCellValue()+ &quot;&lt;/td&gt;&lt;/tr&gt;&quot;
+		}}}
+		
+//		//String[] lists = 
+//		//print the cell value
+//		String[] Lists;
+//		Lists = Lists.add(value)
+//		println(Lists);
+//		println &apos;HIIIIIIIIIIII&apos;
+////		def mylist = []
+////		mylist=mylist.add(value)
+////		for (int k= 0; k&lt;=Lists.size(); k++){
+////		reportFile &lt;&lt; &quot;&lt;tr&gt;&lt;td&gt;&quot;+Lists[0]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[1]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[2]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[3]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[4]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[7]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[8]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+Lists[13]+ &quot;&lt;/td&gt;&lt;/tr&gt;&quot;
+////		
+////			break
+//		}
+//		
+//		}
+//	}
+//	
+//	
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler_BatchExecute" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">
+
+try {
+        Process p =  Runtime.getRuntime().exec(&quot;cmd /c start \&quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\BatchFile\\CSVtoXLS.bat\&quot;&quot;) ;           
+    } catch (IOException ex) {
+    }
+
+
+def CSVPath = &quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\outputException.csv&quot;
+File CSVPathFile = new File(CSVPath)
+if(CSVPathFile.exists()){
+	def BatchFile = &quot;E:\\VidyaWorkspace\\JMeterWorkspace\\apache-jmeter-5.3\\apache-jmeter-5.3\\bin\\CSVtoXLS.bat&quot;
+	Runtime.runtime.exec(BatchFile)
+	//Process p =  Runtime.getRuntime().exec(&quot;cmd /c start \&quot;CSVtoXLS.bat\&quot;&quot;)	
+}
+
+//E:\\VidyaWorkspace\\JMeterWorkspace\\apache-jmeter-5.3\\apache-jmeter-5.3\\bin\\
+
+
+//
+//    try {
+//            String[] command = {&quot;cmd.exe&quot;, &quot;/C&quot;, &quot;Start&quot;, &quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\BatchFile\\CSVtoXLS.bat&quot;};
+//            Process p =  Runtime.getRuntime().exec(command);           
+//        } catch (IOException ex) {
+//        }
+
+//ProcessBuilder pb = new ProcessBuilder(&quot;cmd&quot;, &quot;/c&quot;, &quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\BatchFile\\CSVtoXLS.bat&quot;);
+//File dir = new File(&quot;C:/Program Files/salesforce.com/Data Loader/cliq_process/upsert&quot;);
+//pb.directory(dir);
+//Process p = pb.start();
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler1_XLS2HTML_first" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Iterator;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\testXLS1.html&apos;
+
+File reportFile = new File(FilePathHTML)
+if(reportFile.exists()){
+	reportFile.delete()}
+if(!reportFile.exists()) {
+	reportFile.createNewFile()
+	reportFile &lt;&lt; &quot;&lt;html&gt;&lt;head&gt;&lt;style type=text/css&gt;&lt;/style&gt;&lt;/head&gt;&lt;table align=center border=0 cellpadding=4 cellspacing=0 style=border:0px solid width=100%&gt;&lt;tr&gt;&lt;td&gt;&lt;img src=C:\\Users\\Dileep\\Desktop\\HTMLReports\\Logo1PNG.png align=left style=width:90px;height:75px;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h1&gt;&lt;font color=darkgreen face=Verdana&gt;&lt;a&gt;Matryxsoft Test Reports&lt;/a&gt;&lt;/font&gt;&lt;/h1&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/html&gt;&lt;h1&gt;&lt;/h1&gt;&lt;/table&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details --&gt;&lt;table border=1px solid black border=0 width=100% cellpadding=4 cellspacing=1 style=border:1px solid;&gt;&lt;tr bgcolor=darkgreen&gt;&lt;th style=color:white&gt;Time Stamp&lt;/th&gt;&lt;th style=color:white&gt;Time Elapsed(miliSeconds)&lt;/th&gt;&lt;th style=color:white&gt;Sampler Name&lt;/th&gt;&lt;th style=color:white&gt;Response Code&lt;/th&gt;&lt;th style=color:white&gt;Response Message&lt;/th&gt;&lt;th style=color:white&gt;Success&lt;/th&gt;&lt;th style=color:white&gt;Failure Message&lt;/th&gt;&lt;th style=color:white&gt;URL&lt;/th&gt;&lt;/tr&gt;&quot;
+}
+
+String filepath= &quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\XLSFiles\\outputException.xls&quot;;
+Workbook workbook = new HSSFWorkbook(new FileInputStream(filepath));
+
+Sheet sheet = workbook.getSheetAt(0);
+		Iterator&lt;Row&gt; rows = sheet.rowIterator();
+		//println rows
+		Iterator&lt;Cell&gt; cells = null;
+		while (rows.hasNext()) {
+			Row row = rows.next();
+			//println row
+			cells = row.cellIterator();
+			//println cells
+			//reportFile &lt;&lt; &quot;\n&quot;
+			reportFile &lt;&lt; &quot;&lt;tr&gt;&quot;
+			while (cells.hasNext()) {
+				Cell cell = cells.next();
+				//println cell
+				reportFile &lt;&lt; &quot;&lt;td&gt;&quot;
+				reportFile &lt;&lt; (cell.toString());
+				reportFile &lt;&lt; &quot;&lt;/td&gt;&quot;
+			}
+			reportFile &lt;&lt; &quot;&lt;/tr&gt;&quot;
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler2" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Iterator;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.*
+
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\testXLS1.html&apos;
+
+File reportFile = new File(FilePathHTML)
+if(reportFile.exists()){
+	reportFile.delete()}
+if(!reportFile.exists()) {
+	reportFile.createNewFile()
+	reportFile &lt;&lt; &quot;&lt;html&gt;&lt;head&gt;&lt;style type=text/css&gt;&lt;/style&gt;&lt;/head&gt;&lt;table align=center border=0 cellpadding=4 cellspacing=0 style=border:0px solid width=100%&gt;&lt;tr&gt;&lt;td&gt;&lt;img src=C:\\Users\\Dileep\\Desktop\\HTMLReports\\Logo1PNG.png align=left style=width:90px;height:75px;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h1&gt;&lt;font color=darkgreen face=Verdana&gt;&lt;a&gt;Matryxsoft Test Reports&lt;/a&gt;&lt;/font&gt;&lt;/h1&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/html&gt;&lt;h1&gt;&lt;/h1&gt;&lt;/table&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details --&gt;&lt;table border=1px solid black border=0 width=100% cellpadding=4 cellspacing=1 style=border:1px solid;&gt;&lt;tr bgcolor=darkgreen&gt;&lt;th style=color:white&gt;Time Stamp&lt;/th&gt;&lt;th style=color:white&gt;Time Elapsed(miliSeconds)&lt;/th&gt;&lt;th style=color:white&gt;Sampler Name&lt;/th&gt;&lt;th style=color:white&gt;Response Code&lt;/th&gt;&lt;th style=color:white&gt;Response Message&lt;/th&gt;&lt;th style=color:white&gt;Success&lt;/th&gt;&lt;th style=color:white&gt;Failure Message&lt;/th&gt;&lt;th style=color:white&gt;URL&lt;/th&gt;&lt;/tr&gt;&quot;
+}
+
+String filepath= &quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\XLSFiles\\outputException.xls&quot;;
+Workbook workbook = new HSSFWorkbook(new FileInputStream(filepath));
+
+//HSSFSheet sheet = workbook.getSheetAt(0); //Get first Excel Sheet
+Sheet sheet = workbook.getSheet(&quot;outputException&quot;); //Get data as per sheet name
+        for (Row row : sheet) { // For each Row.
+              Cell cell = row.getCell(1); // Get the Cell at the Index / Column you want.
+              if(cell.getStringCellValue().equalsIgnoreCase(&quot;URL&quot;)) {
+                  println(cell.getRow().getLastCellNum());
+                  for(int i=0;i&lt;=cell.getRow().getLastCellNum()-1;i++) {
+                      println(cell.getRow().getCell(i));
+                  }
+              }
+           }
+
+
+
+
+
+
+
+
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler3" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.*
+import org.apache.poi.*
+import jxl.*
+
+
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\testXLS1.html&apos;
+
+File reportFile = new File(FilePathHTML)
+if(reportFile.exists()){
+	reportFile.delete()}
+if(!reportFile.exists()) {
+	reportFile.createNewFile()
+	reportFile &lt;&lt; &quot;&lt;html&gt;&lt;head&gt;&lt;style type=text/css&gt;&lt;/style&gt;&lt;/head&gt;&lt;table align=center border=0 cellpadding=4 cellspacing=0 style=border:0px solid width=100%&gt;&lt;tr&gt;&lt;td&gt;&lt;img src=C:\\Users\\Dileep\\Desktop\\HTMLReports\\Logo1PNG.png align=left style=width:90px;height:75px;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h1&gt;&lt;font color=darkgreen face=Verdana&gt;&lt;a&gt;Matryxsoft Test Reports&lt;/a&gt;&lt;/font&gt;&lt;/h1&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/html&gt;&lt;h1&gt;&lt;/h1&gt;&lt;/table&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details --&gt;&lt;table border=1px solid black border=0 width=100% cellpadding=4 cellspacing=1 style=border:1px solid;&gt;&lt;tr bgcolor=darkgreen&gt;&lt;th style=color:white&gt;Time Stamp&lt;/th&gt;&lt;th style=color:white&gt;Time Elapsed(miliSeconds)&lt;/th&gt;&lt;th style=color:white&gt;Sampler Name&lt;/th&gt;&lt;th style=color:white&gt;Response Code&lt;/th&gt;&lt;th style=color:white&gt;Response Message&lt;/th&gt;&lt;th style=color:white&gt;Success&lt;/th&gt;&lt;th style=color:white&gt;Failure Message&lt;/th&gt;&lt;th style=color:white&gt;URL&lt;/th&gt;&lt;/tr&gt;&quot;
+}
+
+String filepath= &quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\XLSFiles\\outputException.xls&quot;;
+Workbook workbook1 = Workbook.getWorkbook(new File(filepath))
+Sheet sheet1 = workbook1.getSheet(0)
+
+//get row count
+int totalRows = sheet1.getRows()
+println totalRows
+
+//get column count
+int totalColumn = sheet1.getColumns()
+println totalColumn
+
+//get cell values
+//for(int r = 1;r&lt;totalRows;r++){
+//	for(int c = 1;c&lt;totalColumn;c++){
+//		def cValue = sheet1.getCell(c,r).getContents()
+//		println cValue		
+//	}
+//	}
+
+//get header names from excel
+for(int h = 0;h&lt;totalColumn;h++){
+	def hNames = sheet1.getCell(h,1).getContents()
+			//println hNames
+		}
+		
+def listHeaderNum= [0,1,2,3,4,7,8,13]
+//def listHeader = [&apos;timeStamp&apos;, &apos;elapsed&apos;, &apos;lebel&apos;, &apos;responseCode&apos;, &apos;responseMessage&apos;, &apos;success&apos;, &apos;failureMessage&apos;, &apos;URL&apos;]
+
+//String rowValue;
+
+for(int r = 0;r&lt;totalRows;r++){
+	if (r&gt;1){		
+		for(int ce = 0; ce&lt;=listHeaderNum.size();ce++){
+			for(int c = 0;c&lt;totalColumn;c++){
+				//reportFile &lt;&lt; &quot;&lt;tr&gt;&quot;
+				if(listHeaderNum[ce]==c){
+					//def cValue = sheet1.getCell(c,r).getContents()
+					//println cValue
+					String rowValue = sheet1.getCell(c,r).getContents()
+					def rowList = []
+					rowList=rowList.add(rowValue)					
+					println rowList
+					println (rowList.size())
+				}}}}}
+
+//					//def rowList = []
+//					String rowValue = sheet1.getCell(c,r).getContents()
+////					def rowList = []
+////					rowList=rowList.add(rowValue)					
+////					println rowList
+////					println (rowList.size())
+//					//reportFile &lt;&lt; &quot;&lt;td&gt;&quot;
+//					//reportFile &lt;&lt; sheet1.getCell(c,r).getContents()
+//					//reportFile &lt;&lt; &quot;&lt;/td&gt;&quot;
+//					
+////						&lt;td&gt;&quot;+sheet1.getCell(c,r).getContents()+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+sheet1.getCell(c,r).getContents()+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+sheet1.getCell(c,r).getContents()+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+sheet1.getCell(c,r).getContents()+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+sheet1.getCell(c,r).getContents()+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+sheet1.getCell(c,r).getContents()+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+sheet1.getCell(c,r).getContents()+ &quot;&lt;/td&gt;&lt;/tr&gt;&quot;
+//						
+//						//def cValue = sheet1.getCell(c,r).getContents()
+//						//println cValue
+////						reportFile &lt;&lt; &quot;&lt;tr&gt;&quot;
+////						reportFile &lt;&lt; &quot;&lt;td&gt;&quot;
+////						reportFile &lt;&lt; sheet1.getCell(c,r).getContents()
+////						reportFile &lt;&lt; &quot;&lt;/td&gt;&quot;
+////						reportFile &lt;&lt; &quot;&lt;/tr&gt;&quot;
+//
+//
+//
+//						}//reportFile &lt;&lt; &quot;&lt;/tr&gt;&quot;		
+//						def rowList = []
+//					rowList=rowList.add(rowValue)					
+//					println rowList
+//					println (rowList.size())
+//		}
+//		}
+//		}
+//		}
+	
+
+
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler_ XLS2HTML" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Iterator;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+/*
+ * Author: Chandrasekhar Thotakura
+ * Version: 1.0.1
+ * Date: Jan 8th 2013
+ * 
+ * This is a Java program to convert MS Excel files to html tables
+ * 
+ * Dependencies: APACHE POI LIB
+ * (poi-3.9.jar, poi-ooxml-3.9.jar, poi-ooxml-schemas-3.9.jar, dom4j-1.6.1.jar, xmlbeans-2.3.0.jar)
+ * 
+ */
+public final class XLS2HTML implements ActionListener, Callback {
+
+  	/**
+	 * Public constants
+	 */
+	public static final String[] FILE_TYPES = new String[] { &quot;xls&quot;, &quot;xlsx&quot; };
+
+	/**
+	 * Singleton object
+	 */
+	private static XLS2HTML instance = null;
+
+	/**
+	 * Java Swing components
+	 */
+	private JFrame frame;
+	private JPanel panel;
+	private JFileChooser fileChooser;
+	private JButton openBtn, exitBtn;
+
+	/**
+	 * Internal constants
+	 */
+	private static final String CONTAINER_TITLE = &quot;XLS to HTML Parser&quot;;
+	private static final String OPEN_BTN_ACTIVE_TEXT = &quot;Open an excel file&quot;;
+	private static final String OPEN_BTN_INACTIVE_TEXT = &quot;Parsing th XLS file...&quot;;
+	private static final String EXIT_BTN_ACTIVE_TEXT = &quot;Exit now&quot;;
+	private static final String FILE_FILTER_TITLE = &quot;All Microsoft EXCEL files (*.xlsx, *.xls)&quot;;
+	private static final String GAP = &quot;   &quot;;
+
+	private XLS2HTML() {
+		fileChooser = new JFileChooser();
+		fileChooser.setAcceptAllFileFilterUsed(false);
+		fileChooser.setFileFilter(new FileNameExtensionFilter(
+				FILE_FILTER_TITLE, FILE_TYPES));
+		openBtn = new JButton(OPEN_BTN_ACTIVE_TEXT);
+		openBtn.addActionListener(this);
+		exitBtn = new JButton(EXIT_BTN_ACTIVE_TEXT);
+		exitBtn.addActionListener(this);
+		
+		panel = new JPanel();
+		panel.add(openBtn);
+		panel.add(new JLabel(GAP));
+		panel.add(exitBtn);
+
+		frame = new JFrame(CONTAINER_TITLE);
+		frame.setContentPane(panel);
+		frame.setSize(300, 90);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable (false);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		//frame.pack();
+	}
+
+	/**
+	 * Singleton class get method
+	 * 
+	 * @return
+	 */
+	public static XLS2HTML getInstance() {
+		if (instance == null) {
+			instance = new XLS2HTML();
+		}
+		return instance;
+	}
+
+	private void setOpenBtnEnabled(boolean isEnabled) {
+		openBtn.setEnabled(isEnabled);
+		openBtn.setText(isEnabled ? OPEN_BTN_ACTIVE_TEXT
+				: OPEN_BTN_INACTIVE_TEXT);
+		frame.pack();
+	}
+
+	private void parseXLS() {
+		setOpenBtnEnabled(false);
+		XLS2HTMLParser parser = new XLS2HTMLParser(
+				fileChooser.getSelectedFile(), this);
+		new Thread(parser).start();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent ae) {
+		if (ae.getSource() == openBtn) {
+			int retVal = fileChooser.showOpenDialog(frame);
+			if (retVal == JFileChooser.APPROVE_OPTION) {
+				parseXLS();
+			}
+		} else if (ae.getSource() == exitBtn) {
+			System.exit(0);
+		}
+	}
+
+	@Override
+	public void execute() {
+		setOpenBtnEnabled(true);
+	}
+
+	/**
+	 * Main method
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		XLS2HTML.getInstance();
+	}
+
+}
+
+interface Callback {
+	public void execute();
+}
+
+final class XLS2HTMLParser implements Runnable {
+
+	private static final String NEW_LINE = &quot;\n&quot;;
+	private static final String HTML_FILE_EXTENSION = &quot;.html&quot;;
+	private static final String TEMP_FILE_EXTENSION = &quot;.tmp&quot;;
+	private static final String HTML_SNNIPET_1 = &quot;&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;&quot;;
+	private static final String HTML_SNNIPET_2 = &quot;&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;table&gt;&quot;;
+	private static final String HTML_SNNIPET_3 = &quot;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;&quot;;
+	private static final String HTML_TR_S = &quot;&lt;tr&gt;&quot;;
+	private static final String HTML_TR_E = &quot;&lt;/tr&gt;&quot;;
+	private static final String HTML_TD_S = &quot;&lt;td&gt;&quot;;
+	private static final String HTML_TD_E = &quot;&lt;/td&gt;&quot;;
+
+	private File file;
+	private Callback callback;
+
+	XLS2HTMLParser(File file, Callback callback) {
+		this.file = file;
+		this.callback = callback;
+	}
+
+	public void run() {
+		try {
+			parse(file);
+			callback.execute();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void parse(File file) throws FileNotFoundException, IOException {
+		BufferedWriter writer;
+		Workbook workbook;
+		String fileName = file.getName();
+		String folderName = file.getParent();
+		if (fileName.toLowerCase().endsWith(XLS2HTML.FILE_TYPES[0])) {
+			workbook = new HSSFWorkbook(new FileInputStream(file));
+		} else {
+			workbook = new XSSFWorkbook(new FileInputStream(file));
+		}
+
+		File tempFile = File.createTempFile(fileName + &apos;-&apos;, HTML_FILE_EXTENSION
+				+ TEMP_FILE_EXTENSION, new File(folderName));
+		writer = new BufferedWriter(new FileWriter(tempFile));
+		writer.write(HTML_SNNIPET_1);
+		writer.write(fileName);
+		writer.write(HTML_SNNIPET_2);
+		Sheet sheet = workbook.getSheetAt(0);
+		Iterator&lt;Row&gt; rows = sheet.rowIterator();
+		Iterator&lt;Cell&gt; cells = null;
+		while (rows.hasNext()) {
+			Row row = rows.next();
+			cells = row.cellIterator();
+			writer.write(NEW_LINE);
+			writer.write(HTML_TR_S);
+			while (cells.hasNext()) {
+				Cell cell = cells.next();
+				writer.write(HTML_TD_S);
+				writer.write(cell.toString());
+				writer.write(HTML_TD_E);
+			}
+			writer.write(HTML_TR_E);
+		}
+		writer.write(NEW_LINE);
+		writer.write(HTML_SNNIPET_3);
+		writer.close();
+		File newFile = new File(folderName + &apos;\\&apos; + fileName + &apos;-&apos;
+				+ System.currentTimeMillis() + HTML_FILE_EXTENSION);
+		tempFile.renameTo(newFile);
+	}
+
+}</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler4" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.*
+import org.apache.poi.*
+import jxl.*
+
+
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\testXLS1.html&apos;
+
+File reportFile = new File(FilePathHTML)
+if(reportFile.exists()){
+	reportFile.delete()}
+if(!reportFile.exists()) {
+	reportFile.createNewFile()
+	reportFile &lt;&lt; &quot;&lt;html&gt;&lt;head&gt;&lt;style type=text/css&gt;&lt;/style&gt;&lt;/head&gt;&lt;table align=center border=0 cellpadding=4 cellspacing=0 style=border:0px solid width=100%&gt;&lt;tr&gt;&lt;td&gt;&lt;img src=C:\\Users\\Dileep\\Desktop\\HTMLReports\\Logo1PNG.png align=left style=width:90px;height:75px;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h1&gt;&lt;font color=darkgreen face=Verdana&gt;&lt;a&gt;Matryxsoft Test Reports&lt;/a&gt;&lt;/font&gt;&lt;/h1&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/html&gt;&lt;h1&gt;&lt;/h1&gt;&lt;/table&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details --&gt;&lt;table border=1px solid black border=0 width=100% cellpadding=4 cellspacing=1 style=border:1px solid;&gt;&lt;tr bgcolor=darkgreen&gt;&lt;th style=color:white&gt;Time Stamp&lt;/th&gt;&lt;th style=color:white&gt;Time Elapsed(miliSeconds)&lt;/th&gt;&lt;th style=color:white&gt;Sampler Name&lt;/th&gt;&lt;th style=color:white&gt;Response Code&lt;/th&gt;&lt;th style=color:white&gt;Response Message&lt;/th&gt;&lt;th style=color:white&gt;Success&lt;/th&gt;&lt;th style=color:white&gt;Failure Message&lt;/th&gt;&lt;th style=color:white&gt;URL&lt;/th&gt;&lt;/tr&gt;&quot;
+}
+
+String filepath= &quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\XLSFiles\\outputException.xls&quot;;
+Workbook workbook1 = Workbook.getWorkbook(new File(filepath))
+Sheet sheet1 = workbook1.getSheet(0)
+
+//get row count
+int totalRows = sheet1.getRows()
+println totalRows
+
+//get column count
+int totalColumn = sheet1.getColumns()
+println totalColumn
+
+//get cell values
+//for(int r = 1;r&lt;totalRows;r++){
+//	for(int c = 1;c&lt;totalColumn;c++){
+//		def cValue = sheet1.getCell(c,r).getContents()
+//		println cValue		
+//	}
+//	}
+
+//get header names from excel
+for(int h = 0;h&lt;totalColumn;h++){
+	def hNames = sheet1.getCell(h,1).getContents()
+			//println hNames
+		}
+		
+def listHeaderNum= [0,1,2,3,4,7,8,13]
+//def listHeader = [&apos;timeStamp&apos;, &apos;elapsed&apos;, &apos;lebel&apos;, &apos;responseCode&apos;, &apos;responseMessage&apos;, &apos;success&apos;, &apos;failureMessage&apos;, &apos;URL&apos;]
+
+
+//def rowValue = []
+//String[] rowValue
+
+for(int r = 0;r&lt;totalRows;r++){
+	if (r&gt;1){		
+		for(int ce = 0; ce&lt;=listHeaderNum.size();ce++){
+			for(int c = 0;c&lt;totalColumn;c++){
+				//reportFile &lt;&lt; &quot;&lt;tr&gt;&quot;
+				if(listHeaderNum[ce]==c){
+					def cValue = sheet1.getCell(c,r).getContents()
+					//println cValue
+//					def rowValue = []
+//					rowValue = rowValue.add(cValue)		
+					
+				}
+				}}//println rowValue
+				}}
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">
+
+
+
+
+
+String XcelPath = &quot;C:\\Users\\Dileep\\Desktop\\outputException.xls&quot;
+// For complete examples and data files, please go to https://github.com/aspose-cells/Aspose.Cells-for-Java
+// The path to the documents directory.
+String dataDir = Utils.getSharedDataDir(DeleteARow.class) + &quot;rows_cloumns/&quot;;
+// Instantiating a Workbook object
+Workbook workbook = new Workbook(dataDir + &quot;book1.xls&quot;);
+
+// Accessing the first worksheet in the Excel file
+Worksheet worksheet = workbook.getWorksheets().get(0);
+
+// Deleting 3rd row from the worksheet
+worksheet.getCells().deleteRows(2, 1, true);
+
+// Saving the modified Excel file in default (that is Excel 2000) format
+workbook.save(dataDir + &quot;DeleteARow_out.xls&quot;);
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler_PassedXLS" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.*
+import org.apache.poi.*
+import jxl.*
+
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\testXLS1.html&apos;
+
+File reportFile = new File(FilePathHTML)
+if(reportFile.exists()){
+	reportFile.delete()}
+if(!reportFile.exists()) {
+	reportFile.createNewFile()
+	reportFile &lt;&lt; &quot;&lt;html&gt;&lt;head&gt;&lt;style type=text/css&gt;&lt;/style&gt;&lt;/head&gt;&lt;table align=center border=0 cellpadding=4 cellspacing=0 style=border:0px solid width=100%&gt;&lt;tr&gt;&lt;td&gt;&lt;img src=C:\\Users\\Dileep\\Desktop\\HTMLReports\\Logo1PNG.png align=left style=width:90px;height:75px;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h1&gt;&lt;font color=darkgreen face=Verdana&gt;&lt;a&gt;Matryxsoft Test Reports&lt;/a&gt;&lt;/font&gt;&lt;/h1&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/html&gt;&lt;h1&gt;&lt;/h1&gt;&lt;/table&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details --&gt;&lt;table border=1px solid black border=0 width=100% cellpadding=4 cellspacing=1 style=border:1px solid;&gt;&lt;tr bgcolor=darkgreen&gt;&lt;th style=color:white&gt;Time Stamp&lt;/th&gt;&lt;th style=color:white&gt;Time Elapsed(miliSeconds)&lt;/th&gt;&lt;th style=color:white&gt;Sampler Name&lt;/th&gt;&lt;th style=color:white&gt;Response Code&lt;/th&gt;&lt;th style=color:white&gt;Response Message&lt;/th&gt;&lt;th style=color:white&gt;Success&lt;/th&gt;&lt;th style=color:white&gt;Failure Message&lt;/th&gt;&lt;th style=color:white&gt;URL&lt;/th&gt;&lt;/tr&gt;&quot;
+}
+
+String filepath= &quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\XLSFiles\\outputException.xls&quot;;
+Workbook workbook1 = Workbook.getWorkbook(new File(filepath))
+Sheet sheet1 = workbook1.getSheet(0)
+
+//get row count
+int totalRows = sheet1.getRows()
+//println totalRows
+
+//get column count
+int totalColumn = sheet1.getColumns()
+//println totalColumn
+
+def lsRowData
+def lsAllData =[]
+
+def listHeaderNum= [0,1,2,3,4,7,8,13]
+
+for(int r = 2;r&lt;totalRows-1;r++){
+	lsRowData=[]
+	for(int c = 0;c&lt;totalColumn;c++){
+		cValue = sheet1.getCell(c,r).getContents()
+		lsRowData.add(cValue)
+		println lsRowData
+		if(lsRowData.size()==totalColumn){
+			//println &apos;both are same&apos;
+			reportFile &lt;&lt; &quot;&lt;tr&gt;&lt;td&gt;&quot;+lsRowData[0]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+lsRowData[1]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+lsRowData[2]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+lsRowData[3]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+lsRowData[4]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+lsRowData[7]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+lsRowData[8]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+lsRowData[13]+ &quot;&lt;/td&gt;&lt;/tr&gt;&quot;
+			break
+		}
+	}
+}
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler_Na" enabled="false">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.*
+import org.apache.poi.*
+import jxl.*
+
+String filepath= &quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\XLSFiles\\outputException.xls&quot;;
+Workbook workbook1 = Workbook.getWorkbook(new File(filepath))
+Sheet sheet = workbook1.getSheet(0)
+String sRowValue 
+def lsRowData 
+String sCellValue 
+ 
+          
+ &apos;Get count of column names &apos; 
+          int rowColNamesCount = sheet.getRow(0).lastCellNum 
+ 
+          &apos;Get column names&apos; 
+          for(int i=0;i&lt;=rowColNamesCount-1;i++){ 
+               sCellValue =sheet.getRow(0).getCell(i) 
+               lsCellValues.add(sCellValue) 
+          } 
+ 
+          &apos;Get column names count&apos; 
+          int iColNamesCount=lsCellValues.size(); 
+ 
+          &apos;Get rows count&apos; 
+          int iRowsCount = sheet.getLastRowNum(); 
+ 
+          for(int i=1;i&lt;=iRowsCount;i++){ 
+               lsRowData=[] 
+               for(int j=0;j&lt;=iColNamesCount-1;j++){ 
+                    sRowValue =sheet.getRow(i).getCell(j) 
+                    lsRowData.add(sRowValue) 
+               } 
+               lsAllData.add(lsRowData) 
+          } </stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+      </hashTree>
+      <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Simple Data Writer" enabled="false">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>false</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>false</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>false</dataType>
+            <encoding>false</encoding>
+            <assertions>false</assertions>
+            <subresults>false</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+          </value>
+        </objProp>
+        <stringProp name="filename">E:\VidyaWorkspace\JMeterWorkspace\Reports\Report_DataWriter.jtl</stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group_ReportUsingXLS" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor_Before" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+import org.apache.commons.lang3.SystemUtils;
+
+
+def CSVPath = &quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\outputException.csv&quot;
+File CSVPathFile = new File(CSVPath)
+if(CSVPathFile.exists()){
+	def BatchFile = &quot;E:\\VidyaWorkspace\\JMeterWorkspace\\apache-jmeter-5.3\\apache-jmeter-5.3\\bin\\CSVtoXLS.bat&quot;
+	Runtime.runtime.exec(BatchFile)
+}
+
+println &apos;Pre---------Processor&apos;
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.html&apos;
+//String osv = SystemUtils.OS_VERSION
+def CurrentTime = new SimpleDateFormat(&quot;yyyy/MM/dd hh:mm:ss.SSS aaa&quot;).format(new Date())
+//println(TDNow)
+
+def os = SystemUtils.OS_NAME
+def UserName = SystemUtils.USER_NAME
+def ComputerName =SystemUtils.hostName
+def _threadGroupName = ctx.getThreadGroup().getName();
+//println(_threadGroupName)
+
+InetAddress myIP=InetAddress.getLocalHost();
+//println(&quot;My IP Address is:&quot;);
+//println(myIP.getHostAddress());
+def hostnameCanonical = myIP.getCanonicalHostName();
+//println(hostnameCanonical);
+
+
+File reportFile = new File(FilePathHTML)
+if(reportFile.exists()){
+	reportFile.delete()}
+if(!reportFile.exists()) {
+	reportFile.createNewFile()
+	reportFile &lt;&lt; &quot;&lt;html&gt;&lt;head&gt;&lt;style type=text/css&gt;&lt;/style&gt;&lt;/head&gt;&lt;table align=center border=0 cellpadding=4 cellspacing=0 style=border:0px solid width=100%&gt;&lt;tr&gt;&lt;td&gt;&lt;img src=C:\\Users\\Dileep\\Desktop\\HTMLReports\\Logo1PNG.png align=left style=width:90px;height:75px;/&gt;&lt;/td&gt;&lt;td&gt;&lt;h1&gt;&lt;font color=darkgreen face=Verdana&gt;&lt;a&gt;Matryxsoft Test Reports&lt;/a&gt;&lt;/font&gt;&lt;/h1&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/html&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details name --&gt;&lt;table border=1 width=40% cellpadding=4 cellspacing=1&gt;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Thread Group Name&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$_threadGroupName&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Host ID&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$hostnameCanonical&lt;/td&gt;&lt;/tr&gt;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Compuer&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$ComputerName&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Windows&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$os&lt;/td&gt;&lt;/tr&gt;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Username&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$UserName&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Execution Started&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$CurrentTime&lt;/td&gt;&lt;/tr&gt;&quot;
+}
+
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler_XLStoHTML" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import java.text.SimpleDateFormat
+import java.util.logging.Level
+import org.apache.commons.lang3.SystemUtils;
+import java.*
+import org.apache.poi.*
+import jxl.*
+
+
+
+String FilePathHTML = &apos;C:\\Users\\Dileep\\Desktop\\HTMLReports\\output.html&apos;
+
+def CurrentTime = new SimpleDateFormat(&quot;yyyy/MM/dd hh:mm:ss.SSS aaa&quot;).format(new Date())
+
+File reportFile = new File(FilePathHTML)
+reportFile &lt;&lt; &quot;&lt;tr bgcolor=b3ccff&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Execution Finished&lt;/td&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt;&gt;$CurrentTime&lt;/td&gt;&lt;/tr&gt;&quot;
+
+String filepath= &quot;C:\\Users\\Dileep\\Desktop\\HTMLReports\\XLSFiles\\outputException.xls&quot;;
+Workbook workbook = Workbook.getWorkbook(new File(filepath))
+Sheet sheet = workbook.getSheet(0)
+
+//get row count
+int totalRows = sheet.getRows()
+//println totalRows
+def lastRow=totalRows-1
+
+//get column count
+int totalColumn = sheet.getColumns()
+//println totalColumn
+
+def lsRowData
+
+for(int r = 0;r&lt;totalRows;r++){
+	lsRowData=[]
+	if(r==lastRow){
+		for(int c = 0;c&lt;totalColumn;c++){
+			cValue = sheet.getCell(c,r).getContents()
+			lsRowData.add(cValue)
+			if(lsRowData.size()==totalColumn){
+				if(lsRowData.contains(&quot;TRUE&quot;)){
+						//println &apos;PASS&apos;
+						reportFile &lt;&lt;&quot;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Status&lt;/td&gt;&lt;td style=color:green; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;PASS&lt;/td&gt;&lt;!--td style=color:red; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;FAIL&lt;/td&gt;&lt;td style=color:orange; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;Not Executed&lt;/td--&gt;&lt;/tr&gt;&quot;
+						}else if(lsRowData.contains(&quot;FALSE&quot;)){
+							//println lsRowData[i]
+							//println &apos;FAILED&apos;
+							reportFile &lt;&lt;&quot;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Status&lt;/td&gt;&lt;td style=color:red; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;FAIL&lt;/td&gt;&lt;/tr&gt;&quot;
+							}else{
+								//println &apos;Not Executed&apos;
+								reportFile &lt;&lt;&quot;&lt;tr&gt;&lt;td style=color:black; font-family:Verdana;font-size:14pt&gt;Status&lt;/td&gt;&lt;td style=color:orange; font-weight:bold;font-family:Verdana;font-size:14pt;&gt;Not Executed&lt;/td&gt;&lt;/tr&gt;&quot;
+								}}}}}
+
+reportFile &lt;&lt; &quot;&lt;/table&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details --&gt;&lt;table border=1px solid black border=0 width=100% cellpadding=4 cellspacing=1 style=border:1px solid;&gt;&lt;tr bgcolor=darkgreen&gt;&lt;th style=color:white&gt;Time Stamp&lt;/th&gt;&lt;th style=color:white&gt;Time Elapsed(miliSeconds)&lt;/th&gt;&lt;th style=color:white&gt;Sampler Name&lt;/th&gt;&lt;th style=color:white&gt;Response Code&lt;/th&gt;&lt;th style=color:white&gt;Response Message&lt;/th&gt;&lt;th style=color:white&gt;Success&lt;/th&gt;&lt;th style=color:white&gt;Failure Message&lt;/th&gt;&lt;th style=color:white&gt;URL&lt;/th&gt;&lt;/tr&gt;&quot;
+
+for(int r = 2;r&lt;totalRows-1;r++){
+	lsRowData=[]
+	for(int c = 0;c&lt;totalColumn;c++){
+		cValue = sheet.getCell(c,r).getContents()
+		lsRowData.add(cValue)
+		println lsRowData
+		if(lsRowData.size()==totalColumn){
+			//println &apos;both are same&apos;
+			reportFile &lt;&lt; &quot;&lt;tr&gt;&lt;td&gt;&quot;+lsRowData[0]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+lsRowData[1]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+lsRowData[2]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+lsRowData[3]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+lsRowData[4]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+lsRowData[7]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+lsRowData[8]+ &quot;&lt;/td&gt;&lt;td&gt;&quot;+lsRowData[13]+ &quot;&lt;/td&gt;&lt;/tr&gt;&quot;
+			break
+		}
+	}
+}
+
+reportFile &lt;&lt; &quot;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;&quot;
+
+//Summary block
+reportFile &lt;&lt; &quot;&lt;h1&gt;&lt;/h1&gt;&lt;h2&gt;Summary of Report&lt;/h2&gt;&lt;h1&gt;&lt;/h1&gt;&lt;!-- Display test case details --&gt;&lt;table border=1px solid black border=0 width=100% cellpadding=4 cellspacing=1 style=border:1px solid;&gt;&lt;tr bgcolor=darkgreen&gt;&lt;th style=color:white&gt;Time Stamp&lt;/th&gt;&lt;th style=color:white&gt;Time Elapsed(miliSeconds)&lt;/th&gt;&lt;th style=color:white&gt;Sampler Name&lt;/th&gt;&lt;th style=color:white&gt;Response Code&lt;/th&gt;&lt;th style=color:white&gt;Response Message&lt;/th&gt;&lt;th style=color:white&gt;Success&lt;/th&gt;&lt;th style=color:white&gt;Failure Message&lt;/th&gt;&lt;th style=color:white&gt;URL&lt;/th&gt;&lt;/tr&gt;&quot;
+
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
